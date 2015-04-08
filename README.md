@@ -5,7 +5,7 @@ bsd
 
 Define a respect matrix as follows: Entry `M[i,j]` is a real number in `[-1,1]` representing how much person `i` respects person `j`.
 
-The matrix M is initialized as an identity matrix: everyone is assumed to respect themselves and to have no opinion of everyone else. Each person `i` can add whatever entries they want, to entry `i,j` specifying how much they respect person `j`. 1 means total respect , -1 means absolute disrespect.
+The matrix M is initialized as an identity matrix: everyone is assumed to respect themselves and to have no opinion of everyone else. Each person `i` can add whatever value they want, to entry `i,j` specifying how much they respect person `j`. 1 means total respect , -1 means absolute disrespect.
 
 Let a 'respect path from a to b' be a sequence of indices `p = [i_1 = a, i_2, i_3... i_n = b]` starting with 'a' and ending with 'b'. We can compute the 'implied respect' of that path as follows:
 
