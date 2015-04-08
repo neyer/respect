@@ -1,0 +1,14 @@
+define a respect matrix as follows:
+
+Entry i,j represents how much person i respects person j. This 
+
+The matrix is initialized as an identity matrix: everyone is assumed to respect themselves and to have no opinion of everyone else. Each person i can add whatever entries they want, to entry i,j specifying how much they respect person j. 1 means total respect , -1 means absolute disrespect.
+
+Let a 'respect path from a to b' be a sequence of indices [i_1 = a, i_2, i_3... i_n = b] starting with 'a' and ending with 'b'. We can compute the value of a 'respect path' by multiplying the values of consecutive indices together 
+
+ respect(p) = M_i_1,i_2 *  M_i_2,i_3  *  M_i_2,i_3 
+
+This value is the 'implied respect' of path p from person a towards person b
+
+You can see from this that if person a has a negative respect towards person b, they will also have a negative respect towards
+
