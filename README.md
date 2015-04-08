@@ -54,21 +54,21 @@ For example, suppose A says A respects B, C, and D at 1.  Meanwhile, B and C bot
 
 We can compute the 'total dissonance' of person a's respect as follows: 
 
-   def single_edge_dissonance(M, a, b):
-     explicit_respect = M[a,b]
-     implied_respect = total_implied_respect(M, a, b)
-     # use a square so we have positive deltas
-     # also sum of squares and other nice properties of distance metrics
-     # also a bunch of tiny dissonances don't matter as much as a few big ones
-     return (explicit_respect - implied_respect)**2
-   
-   def total_dissonance(M, a):
-     sum_of_squares = sum([single_edge_dissonance(M, a, b) for b in all_others(M, a)])
-     return sum_of_squares**0.5
+    def single_edge_dissonance(M, a, b):
+      explicit_respect = M[a,b]
+      implied_respect = total_implied_respect(M, a, b)
+      # use a square so we have positive deltas
+      # also sum of squares and other nice properties of distance metrics
+      # also a bunch of tiny dissonances don't matter as much as a few big ones
+      return (explicit_respect - implied_respect)**2
+    
+    def total_dissonance(M, a):
+      sum_of_squares = sum([single_edge_dissonance(M, a, b) for b in all_others(M, a)])
+      return sum_of_squares**0.5
    
 # this would make politics much more reasonable. 
 
-The introduction of the 'soundness' metric gives people an incentive to make sure people they respect get along with each other - which means a whole host of parties interestd in resolving conflicts between two people, as opposed to just a man wearing a black dress with a white collar who reads from an old book and then, after hearing two men wearing suits aruging about the meaning of words, bangs a stick. 
+The introduction of the 'soundness' metric gives people an incentive to make sure people they respect get along with each other - which means a whole host of parties interested in resolving conflicts between two people. This may be a slight improvement over our current system which consists of a man wearing a black dress with a white collar who reads from an old book and then, after hearing two men wearing suits aruging about the meaning of words, bangs a stick and threatens violence.
 
 
 
