@@ -61,7 +61,7 @@ The order 2 terms are `PxP` and `PxN` - these correspond to length two paths. Th
            0.0  0.1  0.0 
            0.04 0.0  0.04
    
-  Person 1 has no length-2 path to Person 2, and thus has no implied respect for Person 2 in this matrix.  Because Person 1 has 0.3 respect for Person 2, and Person 2 has 0.2 respect for Person 3, the matrix P x P says Person P has 0.3 * 0.2 = 0.6 implied respect for Person 3. Likewise, P x N contains the implied respect of all length two paths which start positive and end negative:
+  Person 1 has no length-2 path to Person 2, and thus has no implied respect for Person 2 in this matrix.  Because Person 1 has 0.3 respect for Person 2, and Person 2 has 0.2 respect for Person 3, the matrix P x P says Person P has 0.3 * 0.2 = 0.06 implied respect for Person 3. Likewise, P x N contains the implied respect of all length two paths which start positive and end negative:
 
      P x N = 
            0.0  0.0  0.0
