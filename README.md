@@ -34,7 +34,9 @@ For example, consider the three Person system with respect as follows:
          -0.3 0.2 0.0
 
 Person 1 has 0.3 respect for Person 2 and no opinion of  Person 3.
+
 Person 2 has 0.2 respect for Person 1 and 0.2 respect for Person 3.
+
 Person 3 has -0.3 respect for Person 1 and 0.2 respect for Person 2.
 
 
@@ -54,14 +56,14 @@ The order 1 terms are just P and N - thus, the order 1 implied matrix is the sam
 
 The order 2 terms are `PxP` and `PxN` - these correspond to length two paths. The matrix `PxP` contains a description of the implied respect due to all length two, strictly postive paths. In our example:
 
-     P * P = 
+     P x P = 
            0.06 0.0  0.06
            0.0  0.1  0.0 
            0.04 0.0  0.04
    
-  Person 1 has no length-2 path to Person 2, and thus has no implied respect for Person 2 in this matrix.  Because Person 1 has 0.3 respect for Person 2, and Person 2 has 0.2 respect for Person 3, the matrix P * P says Person P has 0.3 * 0.2 = 0.6 implied respect for Person 3. Likewise, P * N contains the implied respect of all length two paths which start positive and end negative:
+  Person 1 has no length-2 path to Person 2, and thus has no implied respect for Person 2 in this matrix.  Because Person 1 has 0.3 respect for Person 2, and Person 2 has 0.2 respect for Person 3, the matrix P x P says Person P has 0.3 * 0.2 = 0.6 implied respect for Person 3. Likewise, P x N contains the implied respect of all length two paths which start positive and end negative:
 
-     P * N = 
+     P x N = 
            0.0  0.0  0.0
          -0.06  0.0  0.0
            0.0  0.0  0.0
@@ -70,22 +72,22 @@ Becuase Person 2 has 0.2 respect for Person 3, and Person 3 has -0.3 respect for
 
 The total Order 2 Implied respect, then, is:
 
-       (P + N) + (P * P) +  (P * N) = 
+       (P + N) + (P x P) +  (P x N) = 
 
         0.0 0.3 0.0     0.06 0.0  0.06      0.0  0.0  0.0     0.06 0.3 0.06
         0.2 0.0 0.2  +  0.0  0.1  0.0   +  -0.06 0.0  0.0 =   0.14 0.1 0.2
        -0.3 0.2 0.0     0.04 0.0  0.04      0.0  0.0  0.0    -0.26 0.2 0.04
 
-Order 3 implied respect would consist of the above, plus P * P * P and P * P * N - that is, all length three paths that are strictly postive, and all length three paths that have two positive edges followed by a negative one.
+Order 3 implied respect would consist of the above, plus P x P x P and P x P x N - that is, all length three paths that are strictly postive, and all length three paths that have two positive edges followed by a negative one.
 
-Order 4 respect would consist of Order 3 implied respect, plus P * P * P * P and P * P * P * N - all length four paths that are either strictly positive, or have exactly one negative edge at the end. Because the respect values are less than one, the higher order implied respect matrices gradually contribute less and less to the total. This makes sense, because a recomendation from a fiend carries far more weight than a recommendation from a friend of a friend of a friend.
+Order 4 respect would consist of Order 3 implied respect, plus P x P x P x P and P x P x P x N - all length four paths that are either strictly positive, or have exactly one negative edge at the end. Because the respect values are less than one, the higher order implied respect matrices gradually contribute less and less to the total. This makes sense, because a recomendation from a fiend carries far more weight than a recommendation from a friend of a friend of a friend.
 
 
 ## Soundness
 
-  One way to look at  row _i_  of a respect matrix is to see it as a vector, in people space, pointing in the direction of the people that person _i_ says they respect. We can interpret row _i_ of the implied respect matrix in the same way - only person i doesn't have direct control over this row; it is a function of _i_'s statements about who _i_ respects, as well as  the statemetns of the people _i_ respects, and the people they respect, and so on.  By only adding negative edges at the end of paths, we prevent anyone person _i_ redirespects from having direct influence over the direction of person _i_'s implied respect vector.
+  One way to look at  row _i_  of a respect matrix is to see it as a vector, in people space, pointing in the direction of the people that person _i_ says they respect. We can interpret row _i_ of the implied respect matrix in the same way - only person _i_ doesn't have direct control over this row; it is a function of _i_'s statements about who _i_ respects, as well as  the statemetns of the people _i_ respects, and the people they respect, and so on.  By only adding negative edges at the end of paths, we prevent anyone person _i_ disrespects from having direct influence over the direction of person _i_'s implied respect vector.
 
-We can use the dot product to compare a person's explicit respect vector to their implied respect vector. Let's do that in our example. Here are the explicit and the Order 2 implied respect matricies. We'll normalize this dot product by the magnitude of i's explicit respect vector, to get a measure of how much the implied matrix reflects i's 
+We can use the dot product to compare a person's explicit respect vector to their implied respect vector. Let's do that in our example. Here are the explicit and the Order 2 implied respect matricies. We'll normalize this dot product by the magnitude of i's explicit respect vector, to get a measure of how much the implied matrix reflects each person's stated respect:
 
      M =                     I = 
        0.0 0.3 0.0             0.06 0.3 0.06
@@ -99,7 +101,7 @@ Person 2's explicit respect vector is `[0.2 0.0 0.2]`, and their implied respect
 
 Person 3's explicit respect vector is `[-0.3 0.2 0. ]`, and their implied respect vector is `[-0.26 0.2 0.04]`. The dot product of these two is 0.118. Dividng by the magnitude of Person 3's explicit vector (0.361), we get a total soundness of 0.327.
 
-The person here with the lowest soundness is Person 2 - that is because person 2 respects someone (Person 3), who disrespects Person 1, someone respected by Person 2.  If Preson 2 wishes to improve their soundness score, they can do any combination of the following:
+The person here with the lowest soundness is Person 2 - that is because person 2 respects someone (Person 3), who disrespects Person 1, someone respected by Person 2.  If Person 2 wishes to improve their soundness score, they can do any combination of the following:
 
    * Pick sides, and drop respect for either Person 1 or Person 3.
    * Lower respect for both Person 1 and Person 3
@@ -125,7 +127,7 @@ Suppose, as a result of Person 2's intervention, Person 3 decides to increase th
         0.2 0.1 0.2
         0.04 0.2 0.04
 
-  And a quick inspection shows that everyone in this list situatino has perfectly sound respect vectors.
+  And a quick inspection shows that everyone in this last situation has perfectly sound respect vectors.
 
   In short, the respect matrix allows for a mechanism where multiple parties to a dispute have interest not solely in choosing one side over the other, but in repairing the dispute to increase their standing. It allows for us to identify bad actors who have upset large numbers of people without being charged in court (ahem), and provides us with a strong reason to drop minor disputes and focus on rooting out people who really are causing big problems, and encouraging them to stop and repair the damage they've caused.
 
