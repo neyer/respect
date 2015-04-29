@@ -19,9 +19,9 @@ The raw matrix, consisting essentially of statements people have made, tells us 
 
 The reason respect values are in the range [-1,1], is so that you can multiply values of consecutive relationships together. For example, if Alice's respect for Bob is 0.4, and Bob's respect for Carol is 0.6, then Alice has 'implied respect' for Carol of 0.4 x 0.6 = 0.24.
 
-The implied respect allows the respect matrix to help people predict the quality of their interactions with strangers. It could be used to provide implied trust ratings for merchants or service providers, and to help find bad actors who perhaps have not done anythign illegal, but have upset a large number of people.
+The implied respect allows the respect matrix to help people predict the quality of their interactions with strangers. It could be used to provide implied trust ratings for merchants or service providers, and to help find bad actors who perhaps have not done anything illegal, but have upset a large number of people.
 
-It also has another, more interesting aspect which will be expanded later - it provides a number of people with incentive to resolve social conflicts.
+It also has another, more interesting aspect which will be expanded later - it provides a number of people with incentive to resolve social conflicts. It would allow us to determine whose statements we could state seriously, for lack of contradiction. 
 
 ### Computing Implied Respect
 
