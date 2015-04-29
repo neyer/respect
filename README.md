@@ -3,64 +3,67 @@
 2015
 bsd
 
+# basics
+
 Define a respect matrix as follows: Entry `M[i,j]` is a real number in `[-1,1]` representing how much person `i` respects person `j`.
 
-The matrix M is initialized as an identity matrix: everyone is assumed to respect themselves and to have no opinion of everyone else. Each person `i` can add whatever value they want, to entry `i,j` specifying how much they respect person `j`. 1 means total respect , -1 means absolute disrespect.
+For example, we can interpret the identity matrix as an identity matrix. The interpretation is that everyone is respects themselves absolutley, and has no opinion of everyone else. 
 
-Let a 'respect path from a to b' be a sequence of indices `p = [i_1 = a, i_2, i_3... i_n = b]` starting with 'a' and ending with 'b'. We can compute the 'implied respect' of that path as follows:
+The 'respect matrix' is like a social game that lets people know who we might enjoy interacting with. Each person `i` can add whatever value they want, to entry `i,j` specifying how much they respect person `j`. 1 means total respect , -1 means absolute disrespect.  
 
-    def implied_respect(M, p):
-      # assume people respect themselves 
-      total = 1
-      last_edge_positive = True
-    
-      # go through this path one step at a time
-      for a,b in by_consecutive_pairs(p): 
-    
-        if last_edge_positive:
-          this_respect = M[a,b]
-        else:
-          this_respect = M[b,a]
-    
-        if this_respect == 0:
-          return 0
-    
-        total = total*this_respect
-        # invariant:
-        # `total` contains the implied respect of p[0] for b
-        last_edge_positive = this_respect > 0
-    
-      return total
+## Explicit and Implied Respect
 
-This value is the 'implied respect' of path p from person a towards person b
+If I bring a friend over, and you are rude to this friend, then you are also being rude to me. The basic idea here is that respect is transitive; if you respect someone, you have to be respectful to anyone they respect.
 
-You can see from this that if person a has a negative respect towards person b, they will also have a negative respect towards anyone who respects person b - but not the people person b respects.  Negative respect values cause a 'flip' of the direction of the edge that is inspected for the next coefficient.  If A has negative respect for B, the next thing we look at is how C feels about B. If C respects B, and A has negative respect for B, then A _also_ has negative respect for C. This prevents B from trolling A's friends (by falsely claiming to respect them), and allows for A to have respect for people who also disrespect people A disrepects. After the multiplication is performed, the following invariant holds: '`total` contains the implied respect of p from `p[0]` to `b`':
+The raw matrix, consisting essentially of statements people have made, tells us how much people directly say they respect one another.  We can use the raw matrix, which describes 'explicit respect', to compute the 'implicit respect' that people should have for others, based upon the statements everyone has made.
 
+The reason respect values are in the range [-1,1], is so that you can multiply values of consecutive relationships together. For example, if Alice's respect for Bob is 0.4, and Bob's respect for Carol is 0.6, then Alice has 'implied respect' for Carol of 0.4 x 0.6 = 0.24.
 
-So, given two people, A and B, there is some number of paths between A and B. The distribution of the implied respects on each of these paths gives us information about how A feels about B, as directly expressed by A (if A has expressed an opinion) as well as implied by all the stated respects of the other members of the matrix.  For example, if the distribution is uniformly positive, it means that A probably will respect B. A doesn't directly disrespect B, or respect anyone who disrespects B, or disrespect anyone who B respects. Depending upon who these people are, a uniformly positive distribution will be exceedingly rare.
+The implied respect allows the respect matrix to help people predict the quality of their interactions with strangers. It could be used to provide implied trust ratings for merchants or service providers, and to help find bad actors who perhaps have not done anythign illegal, but have upset a large number of people.
 
-We can compute the 'total implied respect' from person a to person b by summing the implied respects across all paths from a to b:
+It also has another, more interesting aspect which will be expanded later - it provides a number of people with incentive to resolve social conflicts.
 
-    def total_implied_respect(M, a, b):
-      return sum([implied_respect(M,p) for p in one_pair_all_paths(M, a, b)])
+### Computing Implied Respect
 
-This 'total implied respect' would be a good proxy for strangers determing whether they wanted to interact with one another. If the interaction between strangers went negatatively, the new negative edges on the graph could be used by both parties to warn their friends.
+For the purposes of computation, we can take the explicit matrix and break it down into two matrices - P, consisting only of positive values, and N, consiting only of negative values. To compute the implied matrix, we sum two order 1 terms, two order 2 terms, two order 3 terms, and so on.
 
-## Controversial:
+For example, consider the three person system with respect as follows:
 
-The 'total implied respect' from a to be can be compared with the 'explicit stated respect' of a to b, (that is, the value M[a,b]) in order to compute the 'soundness' of a's explicit respect for b.
+   M =  0.0 0.3 0.0
+        0.2 0.0 0.2
+       -0.3 0.2 0.0
 
-For example, suppose A says A respects B, C, and D at 1.  Meanwhile, B and C both respect D at -1.  The explicit stated respect of A for D is 1, while the implied respect of A for D is 1 -1 -1 = -1 , because the paths ABD and ACD both have total weight -1.  The divergence between A's 'explicit respect' for D, and the 'implied respect' generated by the matrix suggest that A's respect has less internal consistency.
-
-The explicit respects stated by person `i` correspond to the row `i` of the matrix, and can therefore be considered a vector pointing in the direction `i` says they consider respectable. Likewise, by computing the implied respects of person `i` for each other person `j`, we come up with a vector pointing in the direction that all of the statements in the matrix imply `i` finds respectable.  A simple dot product between the 'explicit respect vector' stated by `i` and the 'implied respect vector if `i`'  has a positive value if the two vectors point in the same direction, and a negative value if they point in opposite directions. Dividing this dot product of 'explicit' and 'implied' respect by the magnitude of the explicit respect gives us a _soundness_  of person `i`'s respect: a higher value means that what person `i` explicitly says they believe is also implied by the overall structure of the graph.  A negative value means that the person's claims do not line up with each other. It's hard to take someone seriously if they say that you have aboslute respect for two people who do not respect each other; it suggests that their notion of respect does not carry as much weight.
+Person 1 has 0.3 respect for person 2 and no opinion of  person 3.
+Person 2 has 0.2 respect for person 1 and 0.2 respect for person 3.
+Person 3 has -0.3 respect for person 1 and 0.2 respect for person 2.
 
 
-# this would make politics much more reasonable. 
+The postive matrix is:
 
-The introduction of the 'soundness' metric gives people an incentive to make sure people they respect get along with each other. Each person's respect for other people is subjective - it depends upon and reflects the statements made by each individual person, with the most weight given to the people you respect the most, in keeping with the natural meaning of respect. Soundness, however, is an aboslute metric which can show the relative merit of one person's respect over another's. I personally would lower my respect for people whose respect was unsound, in part because i don't want to lower my soundness, and in part because i can't take you seriously if you say you have high respect for two people who are rude to and hate each other. Choosing one over the other, or lowering your respect for both until they get along, will increase your soundness score. Increasing your respect for two people who both disrespect each other will decrease your soundness score. 
+   P =  0.0 0.3 0.0
+        0.2 0.0 0.2
+        0.0 0.2 0.0
 
+The negative matrix is:
 
-Our current approach to conflict resolution is for the state to declare one side the winner and the other side the loser. Although this reduces public uncertainty, it does nothign to reduce conflict or stem the resultant damage. This system could exist nicely alongside the judicial system by providing strong incentives for everyone to try to get along and try to respect people as much as possible. If two people begin to disrespect one another, it lowers the soundness of anyone who has explicit or implied respet for both - which means a whole host of parties interested in resolving conflicts between two people. 
+   N =  0.0 0.0 0.0
+        0.0 0.0 0.0
+       -0.3 0.0 0.0
+
+The order 1 terms are just P and N - thus, the order 1 implied matrix is the same as the explicit matrix.
+
+The order 2 terms are `PxP` and `PxN` - these correspond to length two paths. The matrix `PxP` contains a description of the implied respect due to all length two, strictly postive paths. In our example:
+
+  P * P = 
+        0.06 0.0  0.06
+        0.0  0.1  0.0 
+        0.04 0.0  0.04
+
+  Person 1 has no length-2 path to person 2, and thus has no implied respect for person 2 in this matrix.  Because person 1 has 0.3 respect for person 2, and person 2 has 0.2 respect for person 3, then matrix P * P says person P has 0.3 * 0.2 = 0.6 implied respect for person 3.
+  N * P = 
+        0.0  0.0  0.0
+        0.0  0.0  0.0
+        0.0  -0.09  0.0
 
 
 
