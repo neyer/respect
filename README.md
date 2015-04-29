@@ -7,7 +7,7 @@ bsd
 
 Define a respect matrix as follows: Entry `M[i,j]` is a real number in `[-1,1]` representing how much Person `i` respects Person `j`.
 
-For example, we can interpret the identity matrix as a respect matrix: The interpretation is that everyone is respects themselves absolutley, and has no opinion of everyone else. 
+For example, we can interpret the identity matrix as a respect matrix: The interpretation is that everyone respects themselves absolutley, and has no opinion of everyone else. 
 
 The 'respect matrix' is like a social game that lets people know who we might enjoy interacting with. Each Person `i` can add whatever value they want, to entry `i,j` specifying how much they respect Person `j`. 1 means total respect , -1 means absolute disrespect.  
 
