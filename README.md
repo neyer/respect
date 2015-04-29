@@ -131,7 +131,7 @@ Suppose, as a result of Person 2's intervention, Person 3 decides to increase th
 
   In short, the respect matrix allows for a mechanism where multiple parties to a dispute have interest not solely in choosing one side over the other, but in repairing the dispute to increase their standing. It allows for us to identify bad actors who have upset large numbers of people without being charged in court (ahem), and provides us with a strong reason to drop minor disputes and focus on rooting out people who really are causing big problems, and encouraging them to stop and repair the damage they've caused.
 
-  It is impossible for me to imagine a spacefaring civilization, with settlements spanning a galaxy, choosing its leaders in the absurd way they do. I imagine they'd use something like this. And I really, really want to go travel elsewhere in this galaxy. Don't you?
+  It is impossible for me to imagine a spacefaring civilization, with settlements spanning a galaxy, choosing its leaders in the absurd way we do now, all of us picking between two people we don't really like. I imagine they'd use something like this. And I really, really want to go travel elsewhere in this galaxy. Don't you?
 
 
 
