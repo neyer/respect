@@ -4,21 +4,21 @@
 bsd
 
 # Motivation
-Suppose Alice respects Bob. If Bob introduces Alice to his friend Claire, and Bob says "this is my good friend Claire", and then Alice is direspectful to Claire, then she is also being disrespectful to Bob. Being respectful to someone means extending your respect to the people _they_ respect.  Respect is _transitive_. Because the entire world is connected, this has some interesting consequences if we start keeping track of who we say we respect, and who we say we don't respect.
+Suppose Alice respects Bob. If Bob introduces Alice to his friend Claire, and Bob says "this is my good friend Claire", and afterwards Alice is disrespectful to Claire, then she is also being disrespectful to Bob. Being respectful to someone means extending your respect to the people _they_ respect.  Respect is _transitive_. Because the entire world is connected, this has some interesting consequences if we start keeping track of who we say we respect, and who we say we don't respect.
 
 The respect matrix is a political mechanism - it provides an incentive for people who are not directly involved with a conflict to help resolve the conflict. 
 
-It works on a very simple principle: freedom of speech. Each person involved in a respect matrix is able to publicly say "I respect this person", or "I do not respect that person".  Matrix algebra allows us to combine all of these statements together, so that you can determine how much implied respect you have for a person you are hiring - say, someone who is going to redo your bathroom. If a good friend of yours says "This contractor did a great job", you are much more likely to trust the contractor than if you get the same recommendation from a total stranger - or from someone you actively distrust.
+It works on a very simple principle: freedom of speech. Each person involved in a respect matrix is able to publicly say "I respect this person" or "I do not respect that person".  Matrix algebra allows us to combine all of these statements together, so that you can determine how much implied respect you have for a person you are hiring - say, someone who is going to redo your bathroom. If a good friend of yours says "This contractor did a great job", you are much more likely to trust the contractor than if you get the same recommendation from a total stranger - or from someone you actively distrust.
 
 # Mathematics
 
 Suppose there are N people involved in a social system. A respect matrix for this system is an N x N matrix, with all entries being either -1, 0 or 1.  Each person _i_ is free to put whatever value they want into entry _i,j_ for each other person _j_. If entry _i,j_ is 1, this means person _i_ has stated that they respect person _j_.  If entry _i,j_ is -1, this means person _i_ has stated that they do not respect person _j_ - perhaps because person _j_ has wronged them.  If entry _i,j_ is zero, this means that person _i_ has not publicly stated how they feel about person _j_. 
 
-We actually use two matrices to track statements - one containing only statements of respect (The respect matrix), and another containing only statements of disrespect (The disrespect matrix). This makes the math easier. We also prevent people from making statements about themselves - all entries _i,i_ are always zero. Again, for the sake of mathematics. You are free to respect yourself, and i suggest that you do so, but the math of this system works much better if we ignore those claims in the matrix.
+We actually use two matrices to track statements - one containing only statements of respect (The respect matrix), and another containing only statements of disrespect (The disrespect matrix). This makes the math easier. We also prevent people from making statements about themselves - all entries _i,i_ are always zero. Again, for the sake of mathematics. You are free to respect yourself, and I suggest that you do so, but the math of this system works much better if we ignore those claims in the matrix.
 
 ## Transitive Respect
 
-Take a respect matrix and multiply it by itself - this gives you the _implied_ respect of people in the matrix for each other that they don't know direclty, but through a friend. For example in the case above, where Alice respects Bob, and Bob respect claire, the respect matrix is:
+Take a respect matrix and multiply it by itself - this gives you the _implied_ respect of people in the matrix for each other that they don't know direclty, but through a friend. For example in the case above, where Alice respects Bob, and Bob respects Claire, the respect matrix is:
 
     [0, 1, 0]
     [0, 0, 1],
