@@ -3,6 +3,8 @@
 2015
 bsd
 
+quick note: there is a [working implementation on facebook](https://www.facebook.com/respectmatrix).
+
 # Motivation
 Suppose Alice respects Bob. If Bob introduces Alice to his friend Claire, and Bob says "this is my good friend Claire", and afterwards Alice is disrespectful to Claire, then she is also being disrespectful to Bob. Being respectful to someone means extending your respect to the people _they_ respect.  Respect is _transitive_. Because the entire world is connected, this has some interesting consequences if we start keeping track of who we say we respect, and who we say we don't respect.
 
