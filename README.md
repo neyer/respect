@@ -3,9 +3,15 @@
 2015
 bsd
 
-quick note: there is a [working implementation on facebook](https://www.facebook.com/respectmatrix).
+quick note: there is a [working implementation on facebook](https://www.facebook.com/respectmatrix). The implementation uses the 'drops' app for django which is in the enclosed directory.
 
 # Motivation
+The respect matrix is a piece of social technology. It is designed to help you find people you will enjoy interacting with.   It's like Page-rank, but it's for people, and the rankings are personalized - there is no "best person" in the respect matrix. 
+
+Think of it as generalizing and extendign the notion of "friends of friends."
+
+
+# How it Works
 Suppose Alice respects Bob. If Bob introduces Alice to his friend Claire, and Bob says "this is my good friend Claire", and afterwards Alice is disrespectful to Claire, then she is also being disrespectful to Bob. Being respectful to someone means extending your respect to the people _they_ respect.  Respect is _transitive_. Because the entire world is connected, this has some interesting consequences if we start keeping track of who we say we respect, and who we say we don't respect.
 
 The respect matrix is a political mechanism - it provides an incentive for people who are not directly involved with a conflict to help resolve the conflict. 
