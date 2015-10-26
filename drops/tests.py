@@ -64,17 +64,3 @@ class SamplePostsRegexTest(TestCase):
     self.assertResponseMatchesRegex("Explicit respect")
     self.assertResponseMatchesRegex("Implied respect")
 
-  @use_fbid("930632723669712_930953386970979")
-  def test_commentInNestedReply(self):
-    self.assertResponseMatchesRegex("Explicit respect")
-    self.assertResponseMatchesRegex("Implied respect")
-    self.assertEqual(self.response_fbid, "930632723669712_930878356978482")
-
-  @use_fbid("937525029647148_937525452980439")
-  def test_commentOnShare(self):
-    self.assertResponseMatchesRegex("respect")
-    self.assertResponseMatchesRegex("Bernie Sanders")
-
-
-
-
