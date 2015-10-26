@@ -8,7 +8,7 @@ quick note: there is a [working implementation on facebook](https://www.facebook
 # Motivation
 The respect matrix is a piece of social technology. It is designed to help you find people you will enjoy interacting with.   It's like Page-rank, but it's for people, and the rankings are personalized - there is no "best person" in the respect matrix. 
 
-Think of it as generalizing and extendign the notion of "friends of friends."
+Think of it as generalizing and extending the notion of "friends of friends."
 
 
 # How it Works
