@@ -3,12 +3,15 @@
 2015
 bsd
 
-quick note: there is a [working implementation on facebook](https://www.facebook.com/respectmatrix). The implementation uses the 'drops' app for django which is in the enclosed directory.
+
 
 # Motivation
 The respect matrix is a piece of social technology. It is designed to help you find people you will enjoy interacting with.   It's like Page-rank, but it's for people, and the rankings are personalized - there is no "best person" in the respect matrix. 
 
 Think of it as generalizing and extending the notion of "friends of friends."
+
+There are now two working implementations [one on facebook](https://www.facebook.com/respectmatrix), and [another on twitter](https://twitter.com/RespectMatrix). The facebook implementation uses the 'drops' app for django which is in the enclosed directory. The twitter one is based on the same code.
+
 
 
 # How it Works
@@ -95,15 +98,15 @@ The order 2 terms are `PxP` and `PxN` - these correspond to length two paths. Th
               -1 0 0
                0 0 0
    
-Becuase Person 2 respects Person 3, and Person 3 has does not respect Person 1, this means Person 2 has implied respect of  '-1' for person 1. An issue arises here: implied respect doesn't decay over distance. If A respects B, B respects C, C respects D, and D respects E, then without a distance cutoff, A respects E, just as much as a respects B. We'd like to capture the idea that you aren't _always_ bound to respect your the friend of your friends. Therefore we add a 'decay factor' which i've placed somewhat arbitrarily at k = 0.7 This gives the property that someone three hops away has implied respect of  ~ 0.5, instead of 1. The exact number is not super relevant here; the goal is just to discount beliefs of people who are further away from you on the social graph, so that people you are closer to have more weight in terms of who you are likely to respect.
+Becuase Person 2 respects Person 3, and Person 3 has does not respect Person 1, this means Person 2 has implied respect of  '-1' for person 1. An issue arises here: implied respect doesn't decay over distance. If A respects B, B respects C, C respects D, and D respects E, then without a distance cutoff, A respects E, just as much as a respects B. We'd like to capture the idea that you aren't _always_ bound to respect your the friend of your friends. Therefore we add a 'decay factor' which i've placed somewhat arbitrarily at k = 1/8 = 0.125. The exact number is not super relevant here; the goal is just to discount beliefs of people who are further away from you on the social graph, so that people you are closer to have more weight in terms of who you are likely to respect.
 
 The total Order 2 Implied respect, then, is:
 
        P + N + (P x P)*k +  (P x N)*k = 
        
-       0 1 0   0 0 0   0.7 0   0.7      0   0  0     0.7 1.0 0.7
-       1 0 1 + 0 0 0 + 0.0 1.4 0.0  +  -0.7 0  0  =  0.3 1.4 1.0
-       0 1 0  -1 0 0   0.7 0   0.7      0   0  0    -0.3 1.0 0.7
+       0 1 0   0 0 0   0.125 0    0.125      0     0  0     0.125 1    0.125
+       1 0 1 + 0 0 0 + 0.0   0.25 0.0    +  -0.125 0  0  =  0.875 0.25 1
+       0 1 0  -1 0 0   0.125 0    0.125      0     0  0    -0.875 1    0.125
        
 Order 3 implied respect would consist of the above, plus P x P x P * k^2  and P x P x N x k^2- that is, all length three paths that are strictly postive, and all length three paths that have two positive edges followed by a negative one.
 
@@ -113,21 +116,21 @@ Order 4 respect would consist of Order 3 implied respect, plus P x P x P x P x k
 
   One way to look at  row _i_  of a respect matrix is to see it as a vector, in people space, pointing in the direction of the people that person _i_ says they respect. We can interpret row _i_ of the implied respect matrix in the same way - only person _i_ doesn't have direct control over this row; it is a function of _i_'s statements about who _i_ respects, as well as the statements of the people _i_ respects, and the people they respect, and so on.  By only adding negative edges at the end of paths, we prevent anyone person _i_ disrespects from having direct influence over the direction of person _i_'s implied respect vector.
 
-We can use the dot product to compare a person's explicit respect vector to their implied respect vector. Let's do that in our example. Here are the explicit and the Order 2 implied respect matricies. We'll normalize this dot product by the magnitude of i's explicit respect vector, to get a measure of how much the implied matrix reflects each person's stated respect:
+We can use the dot product to compare a person's explicit respect vector to their implied respect vector. Let's do that in our example. Here are the explicit and the Order 2 implied respect matricies. We'll normalize this dot product by the sum of the 1's of i's explicit respect vector, to get a measure of how much the implied matrix reflects each person's stated respect:
 
      M =                     I = 
-       0.0 1.0 0.0             0.7 1.0 0.7
-       1.0 0.0 1.0             0.3 1.4 1.0
-      -1.0 1.0 0.0            -0.3 1.0 0.7
+       0.0 1.0 0.0             0.125 1.0  0.125
+       1.0 0.0 1.0             0.875 0.25 1.0
+      -1.0 1.0 0.0            -0.875 1.0  0.125
 
 
-Person 1's explicit respect vector is `[0 1.0 0]`.  Their implied respect vector is `[0.7 1.0 0.7]`. The dot product of these two is 0.0 * 0.7 +  1.0 * 1.0 + 0.0 * 0.7 =  1.0. Dividing this by 1.0, the magnitude of Person 1's explicit vector, we get a total soundness of 1.0
+Person 1's explicit respect vector is `[0 1.0 0]`.  Their implied respect vector is `[0.125 1.0 0.125]`. The dot product of these two is 0.0 * 0.125 +  1.0 * 1.0 + 0.0 * 0.125 =  1.0. Dividing this by 1.0, the magnitude of Person 1's explicit vector, we get a total soundness of 1.0. Person 1 has a good soundness score here, because their implied vector points in the same direction as their explicit vector.  In other words, Person 1 has a 'coherent opinion' about where, in people space, respectable people are.
 
-Person 2's explicit respect vector is `[1.0 0.0 1.0]`, and their implied respect vector is `[0.3 1.4 1.0]`. The dot product of these two is 1.3. Dividng by the magnitude of Person 2's explicit vector (sqrt(1+1) = 1.414), we get a total soundness of 0.919.
+Person 2's explicit respect vector is `[1.0 0.0 1.0]`, and their implied respect vector is `[0.875 0.25 1.0]`. The dot product of these two is 1.875. Dividng by the number of 1's in  Person 2's explicit vector (2), we get a total soundness of 0.9385. Person 2 has a slightly lower soundness score than persone 1. This because Person 2 says that they respect Person 1,  but also Person 3, who doesn't respect person 1. That means Person 2 has a 'slightly contradictory' opinion of Person 1.  Person 2's opinoin about 'where respectable people are' is slightly less coherent, because they respect two people, one of whom disrespects the other. 
 
-Person 3's explicit respect vector is `[-1.0 1.0 0.0 ]`, and their implied respect vector is `[-0.3 1.0 0.7]`. The dot product of these two is 0.3. Dividng by the magnitude of Person 3's explicit vector (1.414), we get a total soundness of 0.212.
+Person 3's explicit respect vector is `[-1.0 1.0 0.0 ]`, and their implied respect vector is `[-0.875 1.0 0.125]`. The dot product of these two is 1.0. Dividng by the number of 1's in Person 3's explicit vector (2), we get a total soundness of 0.5.
 
-The person here with the lowest soundness is Person 3 - that is because Person 3 respects Person 2, who respects Person 1, while Person 3 also direspects Person 1.  Person 2 takes a small hit to their soundness, because they respect someone (Person 3) who disrespects someone Person 2 respects (Person 1).
+The person here with the lowest soundness is Person 3 - that is because Person 3 respects Person 2, who respects Person 1, while Person 3 also direspects Person 1.  Person 3's opinion is the 'least coherent', because they don't respect someone that their friend does respect.
 
 If Person 2 wishes to improve their soundness score, they can do any combination of the following:
 
@@ -140,20 +143,22 @@ Suppose, as a result of Person 2's intervention, Person 3 decides to increase th
 The new implied matrix here is:
 
       I =  
-        0.7 1.0 0.7
-        1.0 1.4 1.0
-        0.7 1.0 0.7
+        0.125 1.0  0.125
+        1.0   0.25 1.0
+        0.125 1.0  0.125
 
-Notice that Person 1, who has no opinion of Person 3, remained the same. Person 2 now has more implied respect for Person 1 (up to 1.0 from 0.3), and Person 3 now has implied respect for Person 1. How does this new implied matrix respect soundness?
+Notice that Person 1, who has no opinion of Person 3, remained the same. Person 2 now has more implied respect for Person 1 (up to 1.0 from 0.875), and Person 3 now has implied respect for Person 1. How does this new implied matrix respect soundness?
 
 Person 1 stays the same, as their implied respect vector stayed the same.
 
-Person 2 now has an explicit/implied dot product of 2, for a soundness of 1.414, a gain of 54%.
+Person 2 now has an explicit/implied dot product of 2, for a soundness of 1, a gain of 6%.
 
-Person 3 now has an explicit/implied dot product of 1.0, for a soundness of 1.  This is much higher than Person 3's previous soundness of 0.212. If you want to be taken seriously in public, your words have to match up to themselves. The respect matrix allows us to measure, in a very limited sense, the extent to which our professed trust and respect for our peers actually makes sense.
+Person 3 now has an explicit/implied dot product of 1.0, for a soundness of 1.  This is much higher than Person 3's previous soundness of 0.5, because Person 3's opinoin is now more internally consistent.
+
+If you want to be taken seriously in public, your words have to match up to themselves. The respect matrix allows us to measure, in a very limited sense, the extent to which our professed trust and respect for our peers actually makes sense. It also provides an incentive for people who are not directly part of a conflict, to help resolve that conflict.
   
 
-Person 2 has improved their social standing (among people who find soundness of explicit and implied respect a worthy goal) by resolving a conflict between two people they know. *A primary goal of the respect matrix is to provide new incentive for people who are not directly involved in a conflict, but know the conflicting parties, to help find a compromise.*
+Person 2 has improved their consistency (and thus their social standing) by resolving a conflict between two people they know. *A primary goal of the respect matrix is to provide new incentive for people who are not directly involved in a conflict, but know the conflicting parties, to help find a compromise.*
 
 In short, the respect matrix is a mechanism where multiple parties to a dispute have interest not solely in choosing one side over the other, but in repairing the dispute to increase their standing. It allows for us to identify bad actors who have upset large numbers of people without being charged in court (ahem), and provides us with a strong reason to drop minor disputes and focus on rooting out people who really are causing big problems, and encouraging them to stop and repair the damage they've caused.
 
