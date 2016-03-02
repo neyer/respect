@@ -10,7 +10,7 @@ The respect matrix is a piece of social technology. It is designed to help you f
 
 Think of it as generalizing and extending the notion of "friends of friends."
 
-There are now two working implementations [one on facebook](https://www.facebook.com/respectmatrix), and [another on twitter](https://twitter.com/RespectMatrix). The facebook implementation uses the 'drops' app for django which is in the enclosed directory. The twitter one is based on the same code.
+There are now two working implementations: [one on facebook](https://www.facebook.com/respectmatrix), and [another on twitter](https://twitter.com/RespectMatrix). The facebook implementation uses the 'drops' app for django which is in the enclosed directory. The twitter one is based on the same code.
 
 
 
