@@ -5,13 +5,35 @@ bsd
 
 
 
-# Motivation
-The respect matrix is a piece of social technology. It is designed to help you find people you will enjoy interacting with.   It's like Page-rank, but it's for people, and the rankings are personalized - there is no "best person" in the respect matrix. 
+# A Reputation System
+## Not "Yelp for People."  More like "OK Cupid,  for any interaction, not just dating"
 
-Think of it as generalizing and extending the notion of "friends of friends."
+The respect matrix is a reputation system.  
+
+Most reputation systems give people or businesses ratings. Yelp rates businesses. Uber gives ratings for drivers and riders, and  AirBnb gives ratings for guests and hosts.  The are problem with ratings: they can be gamed, they can be widly unfair, and it's hard to answer what "rating a person" would even mean.
+
+The respect marix is different. It works more like a dating website. Instead of giving each person an 'absolute score' to say how good of a partner they are, most dating websites give something like a *match score*.     A "match score" is mean to be an estimate of how much *you* would like a given person.   Someone else looking at the same person would get a different match score.
+
+A "match score" only has meaning when talking about two people. You can't go on OK cupid and see 'how good you are'.  You can, however, see how good a given person might be as a partner for you.  That is how the respect matrix works: there is no score for you that you or anyone else can see. It's not "hidden"; it simply doesn't exist. You *can* see *personalized* scores for other people, which tell you how confident the respect matrix is that you will have a positive interaction with those other people. 
+
+You can't ask the respect matrix "What is my score?", because the respect matrix doesn't work that way.  You don't *have* a score.
+
+You *can* ask it, "Should I do business with / rent my house to / go on a trip with / talk politics with  this person?"
+
+You can also ask it, "Who are some peple who you think will like me? Who are you some people who you think won't like me?"
+
+# Friends of Friends of Friends ...
+## When your friends introduce someone they respect, you're more likely to respect them.
+
+You use the respect matrix by just telling it people you respect, and people you don't respect. It can also work with companies or organizations - they're all the same to the respect matrix.  You can tell the matrix that you 'respect' or 'disrespect' any entity.  These statements are like vouching for someone. You can either vouch _for_ someone, or you vouch against them.
+
+![](http://i.imgur.com/o33KYKP.png)
+
+In this example, each blue line  represents a 'respect' statement. The red lines represent a 'disrespect' statement. 
+
+The total confidence that the respect matrix has about my interaction with that possible roommate would be the sum of all of those paths.
 
 There are now two working implementations: [one on facebook](https://www.facebook.com/respectmatrix), and [another on twitter](https://twitter.com/RespectMatrix). The facebook implementation uses the 'drops' app for django which is in the enclosed directory. The twitter one is based on the same code.
-
 
 
 # How it Works
