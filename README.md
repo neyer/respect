@@ -20,7 +20,9 @@ You can't ask the respect matrix "What is my score?", because the respect matrix
 
 You *can* ask it, "Should I do business with / rent my house to / go on a trip with / talk politics with  this person?"
 
-You can also ask it, "Who are some peple who you think will like me? Who are you some people who you think won't like me?"
+You can also ask it, "Who are some people who you think will like me? Who are you some people who you think won't like me?"
+
+You can also ask it, "I have a conflict with Bob. Who are some people who respect both Bob and myself, who might help resolve this dispute?"
 
 # Friends of Friends of Friends ...
 ## When your friends introduce someone they respect, you're more likely to respect them.
