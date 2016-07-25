@@ -12,9 +12,9 @@ The respect matrix is a reputation system.
 
 Most reputation systems give people or businesses ratings. Yelp rates businesses. Uber gives ratings for drivers and riders, and  AirBnb gives ratings for guests and hosts.  The are problem with ratings: they can be gamed, they can be widly unfair, and it's hard to answer what "rating a person" would even mean.
 
-The respect marix is different. It works more like a dating website. Instead of giving each person an 'absolute score' to say how good of a partner they are, most dating websites give something like a *match score*.     A "match score" is mean to be an estimate of how much *you* would like a given person.   Someone else looking at the same person would get a different match score.
+The respect matrix is different. It works more like a dating website. Instead of giving each person an 'absolute score' to say how good of a partner they are, most dating websites give something like a *match score*.     A "match score" is meant to be an estimate of how much *you* would like a given person.   Someone else looking at the same person would get a different match score.
 
-A "match score" only has meaning when talking about two people. You can't go on OK cupid and see 'how good you are'.  You can, however, see how good a given person might be as a partner for you.  That is how the respect matrix works: there is no score for you that you or anyone else can see. It's not "hidden"; it simply doesn't exist. You *can* see *personalized* scores for other people, which tell you how confident the respect matrix is that you will have a positive interaction with those other people. 
+A "match score" only has meaning when talking about two people. You can't go on OKCupid and see 'how good you are'.  You can, however, see how good a given person might be as a partner for you.  That is how the respect matrix works: there is no score for you that you or anyone else can see. It's not "hidden"; it simply doesn't exist. You *can* see *personalized* scores for other people, which tell you how confident the respect matrix is that you will have a positive interaction with those other people. 
 
 You can't ask the respect matrix "What is my score?", because the respect matrix doesn't work that way.  You don't *have* a score.
 
